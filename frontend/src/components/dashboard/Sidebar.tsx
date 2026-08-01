@@ -5,6 +5,7 @@ import {
   Shield, Home, Lock, Globe, Monitor, Code2, Hash, ShieldCheck, Grid3x3,
   History, FileText, Star, Settings, ChevronDown, LogOut,
   KeyRound, Gauge, ClipboardCheck, Server, UserSearch, Braces, GitCompare,
+  Radar, QrCode, ShieldAlert, Bug,
 } from "lucide-react";
 
 const toolGroups = [
@@ -25,12 +26,17 @@ const toolGroups = [
       { name: "IP Lookup", link: "/tools/ip-lookup", icon: Globe },
       { name: "DNS Lookup", link: "/tools/dns-lookup", icon: Server },
       { name: "WHOIS Lookup", link: "/tools/whois-lookup", icon: UserSearch },
+      { name: "Port Scanner", link: "/tools/port-scanner", icon: Radar },
     ],
   },
   {
     name: "Web Tools",
     icon: Monitor,
-    tools: [],
+    tools: [
+      { name: "Security Headers Checker", link: "/tools/security-headers", icon: ShieldAlert },
+      { name: "Robots.txt Viewer", link: "/tools/robots-viewer", icon: FileText },
+      { name: "XSS/SQLi Pattern Checker", link: "/tools/vuln-checker", icon: Bug },
+    ],
   },
   {
     name: "Encoder / Decoder",
@@ -56,7 +62,9 @@ const toolGroups = [
   {
     name: "Other Tools",
     icon: Grid3x3,
-    tools: [],
+    tools: [
+      { name: "QR Code Generator", link: "/tools/qr-generator", icon: QrCode },
+    ],
   },
 ];
 

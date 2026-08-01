@@ -20,6 +20,11 @@ import JwtDecoder from "./pages/tools/JwtDecoder";
 import IpLookup from "./pages/tools/IpLookup";
 import DnsLookup from "./pages/tools/DnsLookup";
 import WhoisLookup from "./pages/tools/WhoisLookup";
+import PortScanner from "./pages/tools/PortScanner";
+import QrGenerator from "./pages/tools/QrGenerator";
+import SecurityHeaders from "./pages/tools/SecurityHeaders";
+import RobotsViewer from "./pages/tools/RobotsViewer";
+import VulnPatternChecker from "./pages/tools/VulnPatternChecker";
 
 function PageWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -187,6 +192,56 @@ function App() {
             <ProtectedRoute>
               <PageWrapper>
                 <WhoisLookup />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/port-scanner"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <PortScanner />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/qr-generator"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <QrGenerator />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/security-headers"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <SecurityHeaders />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/robots-viewer"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <RobotsViewer />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/vuln-checker"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <VulnPatternChecker />
               </PageWrapper>
             </ProtectedRoute>
           }
