@@ -14,6 +14,12 @@ import PasswordAnalyzer from "./pages/tools/PasswordAnalyzer";
 import PasswordEntropy from "./pages/tools/PasswordEntropy";
 import PasswordPolicy from "./pages/tools/PasswordPolicy";
 import HashGenerator from "./pages/tools/HashGenerator";
+import HashCompare from "./pages/tools/HashCompare";
+import EncoderDecoder from "./pages/tools/EncoderDecoder";
+import JwtDecoder from "./pages/tools/JwtDecoder";
+import IpLookup from "./pages/tools/IpLookup";
+import DnsLookup from "./pages/tools/DnsLookup";
+import WhoisLookup from "./pages/tools/WhoisLookup";
 
 function PageWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -121,6 +127,66 @@ function App() {
             <ProtectedRoute>
               <PageWrapper>
                 <HashGenerator />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/hash-compare"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <HashCompare />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/encoder-decoder"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <EncoderDecoder />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/jwt-decoder"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <JwtDecoder />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/ip-lookup"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <IpLookup />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/dns-lookup"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <DnsLookup />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/whois-lookup"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <WhoisLookup />
               </PageWrapper>
             </ProtectedRoute>
           }

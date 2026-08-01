@@ -1,22 +1,77 @@
-import { useNavigate } from "react-router-dom";
-import { Shield, Home, Lock, Globe, Monitor, Code2, Hash, ShieldCheck, Grid3x3, History, FileText, Star, Settings, ChevronDown, LogOut } from "lucide-react";
+import { useState } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Shield, Home, Lock, Globe, Monitor, Code2, Hash, ShieldCheck, Grid3x3,
+  History, FileText, Star, Settings, ChevronDown, LogOut,
+  KeyRound, Gauge, ClipboardCheck, Server, UserSearch, Braces, GitCompare,
+} from "lucide-react";
 
 const toolGroups = [
-  { name: "Password Tools", icon: Lock },
-  { name: "Network Tools", icon: Globe },
-  { name: "Web Tools", icon: Monitor },
-  { name: "Encoder / Decoder", icon: Code2 },
-  { name: "Hash Tools", icon: Hash },
-  { name: "Security Tools", icon: ShieldCheck },
-  { name: "Other Tools", icon: Grid3x3 },
+  {
+    name: "Password Tools",
+    icon: Lock,
+    tools: [
+      { name: "Password Generator", link: "/tools/password-generator", icon: KeyRound },
+      { name: "Password Analyzer", link: "/tools/password-analyzer", icon: ShieldCheck },
+      { name: "Entropy Calculator", link: "/tools/password-entropy", icon: Gauge },
+      { name: "Policy Validator", link: "/tools/password-policy", icon: ClipboardCheck },
+    ],
+  },
+  {
+    name: "Network Tools",
+    icon: Globe,
+    tools: [
+      { name: "IP Lookup", link: "/tools/ip-lookup", icon: Globe },
+      { name: "DNS Lookup", link: "/tools/dns-lookup", icon: Server },
+      { name: "WHOIS Lookup", link: "/tools/whois-lookup", icon: UserSearch },
+    ],
+  },
+  {
+    name: "Web Tools",
+    icon: Monitor,
+    tools: [],
+  },
+  {
+    name: "Encoder / Decoder",
+    icon: Code2,
+    tools: [
+      { name: "Base64 / URL / HTML", link: "/tools/encoder-decoder", icon: Code2 },
+      { name: "JWT Decoder", link: "/tools/jwt-decoder", icon: Braces },
+    ],
+  },
+  {
+    name: "Hash Tools",
+    icon: Hash,
+    tools: [
+      { name: "Hash Generator", link: "/tools/hash-generator", icon: Hash },
+      { name: "Hash Compare", link: "/tools/hash-compare", icon: GitCompare },
+    ],
+  },
+  {
+    name: "Security Tools",
+    icon: ShieldCheck,
+    tools: [],
+  },
+  {
+    name: "Other Tools",
+    icon: Grid3x3,
+    tools: [],
+  },
 ];
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
+  };
+
+  const toggleGroup = (name: string) => {
+    setOpenGroup(openGroup === name ? null : name);
   };
 
   return (
@@ -30,22 +85,67 @@ export default function Sidebar() {
       </div>
 
       <div className="flex-1 overflow-y-auto px-3 py-4">
-        <a href="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-neonGreen/10 text-neonGreen font-medium mb-4">
+        <Link
+          to="/dashboard"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-neonGreen/10 text-neonGreen font-medium mb-4"
+        >
           <Home size={18} /> Dashboard
-        </a>
+        </Link>
 
         <p className="text-gray-500 text-xs font-semibold px-3 mb-2 tracking-wider">TOOLS</p>
-        {toolGroups.map((group) => (
-          <button
-            key={group.name}
-            className="w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white transition mb-1"
-          >
-            <span className="flex items-center gap-3 text-sm">
-              <group.icon size={18} /> {group.name}
-            </span>
-            <ChevronDown size={14} />
-          </button>
-        ))}
+        {toolGroups.map((group) => {
+          const isOpen = openGroup === group.name;
+          const hasTools = group.tools.length > 0;
+
+          return (
+            <div key={group.name} className="mb-1">
+              <button
+                onClick={() => toggleGroup(group.name)}
+                className="w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white transition"
+              >
+                <span className="flex items-center gap-3 text-sm">
+                  <group.icon size={18} /> {group.name}
+                </span>
+                <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                  <ChevronDown size={14} />
+                </motion.span>
+              </button>
+
+              <AnimatePresence>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pl-6 py-1 space-y-1">
+                      {hasTools ? (
+                        group.tools.map((tool) => (
+                          <Link
+                            key={tool.link}
+                            to={tool.link}
+                            className={`flex items-center gap-2 text-xs py-1.5 px-2 rounded transition ${
+                              location.pathname === tool.link
+                                ? "text-neonGreen bg-neonGreen/10"
+                                : "text-gray-400 hover:text-white hover:bg-white/5"
+                            }`}
+                          >
+                            <tool.icon size={14} />
+                            {tool.name}
+                          </Link>
+                        ))
+                      ) : (
+                        <p className="text-xs text-gray-600 py-1.5 px-2">Coming soon</p>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
 
         <div className="mt-6 border-t border-white/10 pt-4">
           {[

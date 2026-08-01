@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Lock, ShieldCheck, Hash, Code2, KeyRound, Globe, Server, User, Radar, QrCode } from "lucide-react";
+import { Lock, ShieldCheck, Hash, Code2, KeyRound, Globe, Server, User, Radar, QrCode, GitCompare } from "lucide-react";
 
 const tools = [
   { name: "Password Generator", desc: "Generate strong passwords", icon: Lock, color: "text-neonGreen", link: "/tools/password-generator" },
   { name: "Password Analyzer", desc: "Check password strength", icon: ShieldCheck, color: "text-neonBlue", link: "/tools/password-analyzer" },
   { name: "Hash Generator", desc: "Generate file hashes", icon: Hash, color: "text-purple-400", link: "/tools/hash-generator" },
-  { name: "Base64 Encoder/Decoder", desc: "Encode or decode data", icon: Code2, color: "text-blue-400", link: null },
-  { name: "JWT Decoder", desc: "Decode JWT tokens", icon: KeyRound, color: "text-pink-400", link: null },
-  { name: "IP Lookup", desc: "Get IP information", icon: Globe, color: "text-neonGreen", link: null },
-  { name: "DNS Lookup", desc: "Lookup DNS records", icon: Server, color: "text-blue-400", link: null },
-  { name: "WHOIS Lookup", desc: "Domain WHOIS info", icon: User, color: "text-purple-400", link: null },
+  { name: "Hash Compare", desc: "Compare two hashes", icon: GitCompare, color: "text-purple-400", link: "/tools/hash-compare" },
+  { name: "Base64 Encoder/Decoder", desc: "Encode or decode data", icon: Code2, color: "text-blue-400", link: "/tools/encoder-decoder" },
+  { name: "JWT Decoder", desc: "Decode JWT tokens", icon: KeyRound, color: "text-pink-400", link: "/tools/jwt-decoder" },
+  { name: "IP Lookup", desc: "Get IP information", icon: Globe, color: "text-neonGreen", link: "/tools/ip-lookup" },
+  { name: "DNS Lookup", desc: "Lookup DNS records", icon: Server, color: "text-blue-400", link: "/tools/dns-lookup" },
+  { name: "WHOIS Lookup", desc: "Domain WHOIS info", icon: User, color: "text-purple-400", link: "/tools/whois-lookup" },
   { name: "Port Scanner", desc: "Scan open ports", icon: Radar, color: "text-neonGreen", link: null },
   { name: "QR Code Generator", desc: "Generate QR codes", icon: QrCode, color: "text-pink-400", link: null },
 ];
