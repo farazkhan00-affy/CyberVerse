@@ -1,8 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import ParticleBackground from "./ParticleBackground";
 import { motion } from "framer-motion";
 import { Zap, BarChart3 } from "lucide-react";
 
 export default function Hero() {
+  const navigate = useNavigate();
+
+  const handleProtectedNav = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-cyberDark overflow-hidden pt-20">
       <ParticleBackground />
@@ -27,6 +39,7 @@ export default function Hero() {
 
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <motion.button
+            onClick={handleProtectedNav}
             whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(0,200,83,0.5)" }}
             whileTap={{ scale: 0.97 }}
             className="flex items-center justify-center gap-2 bg-neonGreen text-black font-semibold px-8 py-3 rounded-lg transition"
@@ -34,6 +47,7 @@ export default function Hero() {
             <Zap size={18} /> Explore Tools
           </motion.button>
           <motion.button
+            onClick={handleProtectedNav}
             whileHover={{ scale: 1.05, borderColor: "rgba(0,200,83,0.6)" }}
             whileTap={{ scale: 0.97 }}
             className="flex items-center justify-center gap-2 border border-neonGreen/40 text-white px-8 py-3 rounded-lg hover:bg-neonGreen/10 transition"

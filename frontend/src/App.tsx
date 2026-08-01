@@ -9,6 +9,11 @@ import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PasswordGenerator from "./pages/tools/PasswordGenerator";
+import PasswordAnalyzer from "./pages/tools/PasswordAnalyzer";
+import PasswordEntropy from "./pages/tools/PasswordEntropy";
+import PasswordPolicy from "./pages/tools/PasswordPolicy";
+import HashGenerator from "./pages/tools/HashGenerator";
 
 function PageWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -45,15 +50,15 @@ function App() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<LandingPage />} />
         <Route
-  path="/dashboard"
-  element={
-    <ProtectedRoute>
-      <PageWrapper>
-        <Dashboard />
-      </PageWrapper>
-    </ProtectedRoute>
-  }
-/>
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <Dashboard />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/register"
           element={
@@ -68,6 +73,56 @@ function App() {
             <PageWrapper>
               <Login />
             </PageWrapper>
+          }
+        />
+        <Route
+          path="/tools/password-generator"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <PasswordGenerator />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/password-analyzer"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <PasswordAnalyzer />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/password-entropy"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <PasswordEntropy />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/password-policy"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <PasswordPolicy />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/hash-generator"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <HashGenerator />
+              </PageWrapper>
+            </ProtectedRoute>
           }
         />
       </Routes>

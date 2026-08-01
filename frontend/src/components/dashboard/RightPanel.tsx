@@ -44,10 +44,10 @@ export default function RightPanel() {
       <div className="bg-white/5 border border-white/10 rounded-xl p-5">
         <p className="text-white font-semibold text-sm mb-1">Quick Scan</p>
         <p className="text-gray-500 text-xs mb-4">Perform a quick security scan</p>
-        <select className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white mb-3">
-          <option>Quick Scan (Basic)</option>
-          <option>Deep Scan (Advanced)</option>
-        </select>
+        <select className="w-full bg-cyberDark border border-white/10 rounded-lg px-3 py-2 text-sm text-white mb-3">
+  <option className="bg-cyberDark text-white">Quick Scan (Basic)</option>
+  <option className="bg-cyberDark text-white">Deep Scan (Advanced)</option>
+</select>
         <button className="w-full flex items-center justify-center gap-2 bg-neonGreen text-black font-semibold py-2.5 rounded-lg hover:brightness-110 transition">
           <Search size={16} /> Start Scan
         </button>

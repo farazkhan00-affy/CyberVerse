@@ -1,6 +1,24 @@
+import { useState } from "react";
 import { Search, Bell } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const notifications = [
+  { text: "Password strength checked", time: "2 mins ago" },
+  { text: "Port scan completed", time: "15 mins ago" },
+  { text: "WHOIS lookup performed", time: "32 mins ago" },
+];
 
 export default function Topbar() {
+  const [open, setOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(notifications.length);
+
+  const handleBellClick = () => {
+    setOpen(!open);
+    if (!open) {
+      setUnreadCount(0);
+    }
+  };
+
   return (
     <div className="flex items-center justify-between px-8 py-4 border-b border-white/10 bg-cyberDark sticky top-0 z-10">
       <div className="relative w-96">
@@ -12,12 +30,44 @@ export default function Topbar() {
         />
       </div>
       <div className="flex items-center gap-4">
-        <button className="relative text-gray-400 hover:text-white transition">
-          <Bell size={20} />
-          <span className="absolute -top-1 -right-1 bg-neonGreen text-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-            3
-          </span>
-        </button>
+        <div className="relative">
+          <button
+            onClick={handleBellClick}
+            className="relative text-gray-400 hover:text-white transition"
+          >
+            <Bell size={20} />
+            {unreadCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-neonGreen text-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                {unreadCount}
+              </span>
+            )}
+          </button>
+
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="absolute right-0 mt-3 w-72 bg-cyberDark border border-white/10 rounded-xl shadow-lg overflow-hidden z-20"
+              >
+                <div className="px-4 py-3 border-b border-white/10">
+                  <p className="text-white text-sm font-semibold">Notifications</p>
+                </div>
+                <div className="max-h-64 overflow-y-auto">
+                  {notifications.map((n, i) => (
+                    <div key={i} className="px-4 py-3 border-b border-white/5 hover:bg-white/5 transition">
+                      <p className="text-gray-300 text-xs">{n.text}</p>
+                      <p className="text-gray-600 text-xs mt-1">{n.time}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
         <div className="w-9 h-9 rounded-full bg-neonGreen/20 flex items-center justify-center text-neonGreen font-semibold text-sm">
           F
         </div>
