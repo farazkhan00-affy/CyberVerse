@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AllTools from "./pages/AllTools";
 import PasswordGenerator from "./pages/tools/PasswordGenerator";
 import PasswordAnalyzer from "./pages/tools/PasswordAnalyzer";
 import PasswordEntropy from "./pages/tools/PasswordEntropy";
@@ -25,6 +26,12 @@ import QrGenerator from "./pages/tools/QrGenerator";
 import SecurityHeaders from "./pages/tools/SecurityHeaders";
 import RobotsViewer from "./pages/tools/RobotsViewer";
 import VulnPatternChecker from "./pages/tools/VulnPatternChecker";
+import CookieAnalyzer from "./pages/tools/CookieAnalyzer";
+import CorsAnalyzer from "./pages/tools/CorsAnalyzer";
+import SslChecker from "./pages/tools/SslChecker";
+import CaesarCipher from "./pages/tools/CaesarCipher";
+import AesTool from "./pages/tools/AesTool";
+import HexBinaryConverter from "./pages/tools/HexBinaryConverter";
 
 function PageWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -84,6 +91,16 @@ function App() {
             <PageWrapper>
               <Login />
             </PageWrapper>
+          }
+        />
+        <Route
+          path="/tools"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <AllTools />
+              </PageWrapper>
+            </ProtectedRoute>
           }
         />
         <Route
@@ -242,6 +259,66 @@ function App() {
             <ProtectedRoute>
               <PageWrapper>
                 <VulnPatternChecker />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/cookie-analyzer"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <CookieAnalyzer />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/cors-analyzer"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <CorsAnalyzer />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/ssl-checker"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <SslChecker />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/caesar-cipher"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <CaesarCipher />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/aes-tool"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <AesTool />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tools/hex-binary"
+          element={
+            <ProtectedRoute>
+              <PageWrapper>
+                <HexBinaryConverter />
               </PageWrapper>
             </ProtectedRoute>
           }

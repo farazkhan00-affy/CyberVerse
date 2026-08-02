@@ -5,7 +5,8 @@ import {
   Shield, Home, Lock, Globe, Monitor, Code2, Hash, ShieldCheck, Grid3x3,
   History, FileText, Star, Settings, ChevronDown, LogOut,
   KeyRound, Gauge, ClipboardCheck, Server, UserSearch, Braces, GitCompare,
-  Radar, QrCode, ShieldAlert, Bug,
+  Radar, QrCode, ShieldAlert, Bug, Cookie, Network,
+  KeySquare, ShieldEllipsis, Binary,
 } from "lucide-react";
 
 const toolGroups = [
@@ -57,13 +58,20 @@ const toolGroups = [
   {
     name: "Security Tools",
     icon: ShieldCheck,
-    tools: [],
+    tools: [
+      { name: "Cookie Analyzer", link: "/tools/cookie-analyzer", icon: Cookie },
+      { name: "CORS Analyzer", link: "/tools/cors-analyzer", icon: Network },
+      { name: "SSL Certificate Checker", link: "/tools/ssl-checker", icon: Lock },
+    ],
   },
   {
     name: "Other Tools",
     icon: Grid3x3,
     tools: [
       { name: "QR Code Generator", link: "/tools/qr-generator", icon: QrCode },
+      { name: "Caesar Cipher", link: "/tools/caesar-cipher", icon: KeySquare },
+      { name: "AES Encrypt/Decrypt", link: "/tools/aes-tool", icon: ShieldEllipsis },
+      { name: "Hex/Binary Converter", link: "/tools/hex-binary", icon: Binary },
     ],
   },
 ];

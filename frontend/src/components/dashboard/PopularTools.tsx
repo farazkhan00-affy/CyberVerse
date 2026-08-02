@@ -21,7 +21,7 @@ export default function PopularTools() {
     <div className="mt-8">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-white font-semibold text-lg">Popular Tools</h2>
-        <a href="#" className="text-neonGreen text-sm hover:underline">View All Tools →</a>
+        <Link to="/tools" className="text-neonGreen text-sm hover:underline">View All Tools →</Link>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         {tools.map((tool, i) => (
