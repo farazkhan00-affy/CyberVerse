@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Shield, Home, Lock, Globe, Monitor, Code2, Hash, ShieldCheck, Grid3x3,
+  Home, Lock, Globe, Monitor, Code2, Hash, ShieldCheck, Grid3x3,
   History, FileText, Star, Settings, ChevronDown, LogOut,
   KeyRound, Gauge, ClipboardCheck, Server, UserSearch, Braces, GitCompare,
   Radar, QrCode, ShieldAlert, Bug, Cookie, Network,
   KeySquare, ShieldEllipsis, Binary,
 } from "lucide-react";
+import logo from "../../assets/cyberverse-logo.svg";
 
 const toolGroups = [
   {
@@ -80,6 +81,18 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const [profileName, setProfileName] = useState("Faraz");
+  const [profileAvatar, setProfileAvatar] = useState<string | null>(null);
+
+  useEffect(() => {
+    const load = () => {
+      setProfileName(localStorage.getItem("profile_name") || "Faraz");
+      setProfileAvatar(localStorage.getItem("profile_avatar"));
+    };
+    load();
+    window.addEventListener("profile-updated", load);
+    return () => window.removeEventListener("profile-updated", load);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -93,7 +106,7 @@ export default function Sidebar() {
   return (
     <aside className="w-64 h-screen bg-cyberDark border-r border-white/10 fixed left-0 top-0 flex flex-col">
       <div className="flex items-center gap-2 px-6 py-5 border-b border-white/10">
-        <Shield className="text-neonGreen" size={26} />
+        <img src={logo} alt="CyberVerse" className="w-7 h-7" />
         <div>
           <p className="text-white font-bold leading-tight">CYBERVERSE</p>
           <p className="text-gray-500 text-xs">Protect. Analyze. Secure.</p>
@@ -165,31 +178,35 @@ export default function Sidebar() {
 
         <div className="mt-6 border-t border-white/10 pt-4">
           {[
-            { name: "Scans History", icon: History },
-            { name: "Reports", icon: FileText },
-            { name: "Favorites", icon: Star },
-            { name: "Settings", icon: Settings },
+            { name: "Scans History", icon: History, link: "/scans-history" },
+            { name: "Reports", icon: FileText, link: "/reports" },
+            { name: "Favorites", icon: Star, link: "/tools" },
+            { name: "Settings", icon: Settings, link: "/settings" },
           ].map((item) => (
-            <a
+            <Link
               key={item.name}
-              href="#"
+              to={item.link}
               className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white transition text-sm mb-1"
             >
               <item.icon size={18} /> {item.name}
-            </a>
+            </Link>
           ))}
         </div>
       </div>
 
-      <div className="flex items-center gap-3 px-4 py-4 border-t border-white/10">
-        <div className="w-9 h-9 rounded-full bg-neonGreen/20 flex items-center justify-center text-neonGreen font-semibold">
-          F
+      <Link to="/profile" className="flex items-center gap-3 px-4 py-4 border-t border-white/10 hover:bg-white/5 transition">
+        <div className="w-9 h-9 rounded-full bg-neonGreen/20 flex items-center justify-center text-neonGreen font-semibold overflow-hidden flex-shrink-0">
+          {profileAvatar ? (
+            <img src={profileAvatar} alt="Avatar" className="w-full h-full object-cover" />
+          ) : (
+            profileName.charAt(0)
+          )}
         </div>
         <div>
-          <p className="text-white text-sm font-medium">Faraz</p>
+          <p className="text-white text-sm font-medium">{profileName}</p>
           <p className="text-neonGreen text-xs">Premium User</p>
         </div>
-      </div>
+      </Link>
 
       <button
         onClick={handleLogout}

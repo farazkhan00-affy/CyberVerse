@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Globe, Search, MapPin } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
+import Skeleton from "../../components/Skeleton";
+import { addActivity } from "../../lib/activity";
 
 interface IpInfo {
   ip: string;
@@ -35,6 +37,7 @@ export default function IpLookup() {
         setError(data.message || "Could not find information for this IP");
       } else {
         setResult(data);
+        addActivity("IP lookup performed");
       }
     } catch {
       setError("Failed to fetch IP information. Check your connection.");
@@ -82,6 +85,14 @@ export default function IpLookup() {
             {error && (
               <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-lg px-4 py-2 mb-4">
                 {error}
+              </div>
+            )}
+
+            {loading && (
+              <div className="grid grid-cols-2 gap-3">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <Skeleton key={i} className="h-16" />
+                ))}
               </div>
             )}
 

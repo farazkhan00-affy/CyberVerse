@@ -4,6 +4,7 @@ import { Cookie, Search, CheckCircle2, XCircle } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
 import api from "../../lib/api";
+import { addActivity } from "../../lib/activity";
 
 interface CookieInfo {
   name: string;
@@ -31,6 +32,7 @@ export default function CookieAnalyzer() {
     try {
       const res = await api.get("/web/cookie-analyzer", { params: { url: url.trim() } });
       setCookies(res.data.cookies);
+      addActivity("Cookie analysis performed");
     } catch (err: any) {
       setError(err.response?.data?.detail || "Could not reach this URL");
     } finally {

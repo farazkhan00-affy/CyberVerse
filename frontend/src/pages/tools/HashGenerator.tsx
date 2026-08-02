@@ -4,6 +4,7 @@ import { Hash, Copy, Check, Upload } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
 import { md5, md5FromArrayBuffer } from "../../lib/md5";
+import { addActivity } from "../../lib/activity";
 
 async function sha(algo: "SHA-1" | "SHA-256" | "SHA-384" | "SHA-512", buffer: ArrayBuffer) {
   const hashBuffer = await crypto.subtle.digest(algo, buffer);
@@ -28,6 +29,7 @@ export default function HashGenerator() {
       SHA256: await sha("SHA-256", buffer),
       SHA512: await sha("SHA-512", buffer),
     });
+    addActivity("Hash generated");
   };
 
   const generateFromFile = async (file: File) => {
@@ -40,6 +42,7 @@ export default function HashGenerator() {
       SHA256: await sha("SHA-256", buffer),
       SHA512: await sha("SHA-512", buffer),
     });
+    addActivity("Hash generated");
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

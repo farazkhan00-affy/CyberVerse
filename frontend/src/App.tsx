@@ -9,7 +9,12 @@ import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ToastContainer from "./components/ToastContainer";
 import AllTools from "./pages/AllTools";
+import Reports from "./pages/Reports";
+import ScansHistory from "./pages/ScansHistory";
+import SettingsPage from "./pages/SettingsPage";
+import Profile from "./pages/Profile";
 import PasswordGenerator from "./pages/tools/PasswordGenerator";
 import PasswordAnalyzer from "./pages/tools/PasswordAnalyzer";
 import PasswordEntropy from "./pages/tools/PasswordEntropy";
@@ -64,267 +69,310 @@ function App() {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<LandingPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
+    <>
+      <ToastContainer />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <Dashboard />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
               <PageWrapper>
-                <Dashboard />
+                <Register />
               </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <PageWrapper>
-              <Register />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <PageWrapper>
-              <Login />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path="/tools"
-          element={
-            <ProtectedRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
               <PageWrapper>
-                <AllTools />
+                <Login />
               </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/password-generator"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <PasswordGenerator />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/password-analyzer"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <PasswordAnalyzer />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/password-entropy"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <PasswordEntropy />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/password-policy"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <PasswordPolicy />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/hash-generator"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <HashGenerator />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/hash-compare"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <HashCompare />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/encoder-decoder"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <EncoderDecoder />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/jwt-decoder"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <JwtDecoder />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/ip-lookup"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <IpLookup />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/dns-lookup"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <DnsLookup />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/whois-lookup"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <WhoisLookup />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/port-scanner"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <PortScanner />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/qr-generator"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <QrGenerator />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/security-headers"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <SecurityHeaders />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/robots-viewer"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <RobotsViewer />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/vuln-checker"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <VulnPatternChecker />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/cookie-analyzer"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <CookieAnalyzer />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/cors-analyzer"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <CorsAnalyzer />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/ssl-checker"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <SslChecker />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/caesar-cipher"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <CaesarCipher />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/aes-tool"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <AesTool />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tools/hex-binary"
-          element={
-            <ProtectedRoute>
-              <PageWrapper>
-                <HexBinaryConverter />
-              </PageWrapper>
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </AnimatePresence>
+            }
+          />
+          <Route
+            path="/tools"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <AllTools />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <Reports />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/scans-history"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <ScansHistory />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <SettingsPage />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <Profile />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/password-generator"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <PasswordGenerator />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/password-analyzer"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <PasswordAnalyzer />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/password-entropy"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <PasswordEntropy />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/password-policy"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <PasswordPolicy />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/hash-generator"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <HashGenerator />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/hash-compare"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <HashCompare />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/encoder-decoder"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <EncoderDecoder />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/jwt-decoder"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <JwtDecoder />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/ip-lookup"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <IpLookup />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/dns-lookup"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <DnsLookup />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/whois-lookup"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <WhoisLookup />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/port-scanner"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <PortScanner />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/qr-generator"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <QrGenerator />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/security-headers"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <SecurityHeaders />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/robots-viewer"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <RobotsViewer />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/vuln-checker"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <VulnPatternChecker />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/cookie-analyzer"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <CookieAnalyzer />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/cors-analyzer"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <CorsAnalyzer />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/ssl-checker"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <SslChecker />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/caesar-cipher"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <CaesarCipher />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/aes-tool"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <AesTool />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tools/hex-binary"
+            element={
+              <ProtectedRoute>
+                <PageWrapper>
+                  <HexBinaryConverter />
+                </PageWrapper>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </AnimatePresence>
+    </>
   );
 }
 

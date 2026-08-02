@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Server, Search } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
+import { addActivity } from "../../lib/activity";
 
 interface DnsAnswer {
   name: string;
@@ -44,6 +45,7 @@ export default function DnsLookup() {
         setError("No DNS records found for this domain");
       } else {
         setResults(allResults);
+        addActivity("DNS lookup performed");
       }
     } catch {
       setError("Failed to fetch DNS records. Check your connection.");

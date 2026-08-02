@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Shield } from "lucide-react";
+import logo from "../assets/cyberverse-logo.svg";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -25,7 +25,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-2">
-          <Shield className="text-neonGreen" size={28} />
+          <img src={logo} alt="CyberVerse" className="w-8 h-8" />
           <span className="text-2xl font-bold text-white">
             CYBER<span className="text-neonGreen">VERSE</span>
           </span>

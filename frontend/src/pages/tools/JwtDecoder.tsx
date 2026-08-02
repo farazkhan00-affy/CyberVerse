@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { KeyRound, Copy, Check, AlertTriangle } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
+import { addActivity } from "../../lib/activity";
 
 function base64UrlDecode(str: string) {
   let s = str.replace(/-/g, "+").replace(/_/g, "/");
@@ -41,6 +42,7 @@ export default function JwtDecoder() {
       setHeader(JSON.stringify(decodedHeader, null, 2));
       setPayload(JSON.stringify(decodedPayload, null, 2));
       setSignature(parts[2]);
+      addActivity("JWT token decoded");
 
       if (decodedPayload.exp) {
         const expDate = new Date(decodedPayload.exp * 1000);

@@ -4,6 +4,7 @@ import { Lock, Search, ShieldCheck, ShieldAlert } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
 import api from "../../lib/api";
+import { addActivity } from "../../lib/activity";
 
 interface SslInfo {
   domain: string;
@@ -30,6 +31,7 @@ export default function SslChecker() {
     try {
       const res = await api.get("/web/ssl-check", { params: { domain: domain.trim() } });
       setResult(res.data);
+      addActivity("SSL certificate checked");
     } catch (err: any) {
       setError(err.response?.data?.detail || "Could not check SSL certificate");
     } finally {

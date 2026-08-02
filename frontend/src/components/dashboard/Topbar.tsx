@@ -1,22 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const notifications = [
-  { text: "Password strength checked", time: "2 mins ago" },
-  { text: "Port scan completed", time: "15 mins ago" },
-  { text: "WHOIS lookup performed", time: "32 mins ago" },
-];
+import { getActivities, subscribeActivity, getUnreadCount, markAllSeen, timeAgo } from "../../lib/activity";
 
 export default function Topbar() {
   const [open, setOpen] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(notifications.length);
+  const [activities, setActivities] = useState(getActivities());
+  const [unreadCount, setUnreadCount] = useState(getUnreadCount());
+  const [avatar, setAvatar] = useState<string | null>(null);
+
+  useEffect(() => {
+    return subscribeActivity(() => {
+      setActivities(getActivities());
+      setUnreadCount(getUnreadCount());
+    });
+  }, []);
+
+  useEffect(() => {
+    const load = () => setAvatar(localStorage.getItem("profile_avatar"));
+    load();
+    window.addEventListener("profile-updated", load);
+    return () => window.removeEventListener("profile-updated", load);
+  }, []);
 
   const handleBellClick = () => {
     setOpen(!open);
-    if (!open) {
-      setUnreadCount(0);
-    }
+    if (!open) markAllSeen();
   };
 
   return (
@@ -56,20 +65,23 @@ export default function Topbar() {
                   <p className="text-white text-sm font-semibold">Notifications</p>
                 </div>
                 <div className="max-h-64 overflow-y-auto">
-                  {notifications.map((n, i) => (
-                    <div key={i} className="px-4 py-3 border-b border-white/5 hover:bg-white/5 transition">
+                  {activities.slice(0, 8).map((n) => (
+                    <div key={n.id} className="px-4 py-3 border-b border-white/5 hover:bg-white/5 transition">
                       <p className="text-gray-300 text-xs">{n.text}</p>
-                      <p className="text-gray-600 text-xs mt-1">{n.time}</p>
+                      <p className="text-gray-600 text-xs mt-1">{timeAgo(n.time)}</p>
                     </div>
                   ))}
+                  {activities.length === 0 && (
+                    <p className="px-4 py-3 text-gray-600 text-xs">No notifications yet</p>
+                  )}
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        <div className="w-9 h-9 rounded-full bg-neonGreen/20 flex items-center justify-center text-neonGreen font-semibold text-sm">
-          F
+        <div className="w-9 h-9 rounded-full bg-neonGreen/20 flex items-center justify-center text-neonGreen font-semibold text-sm overflow-hidden">
+          {avatar ? <img src={avatar} alt="Avatar" className="w-full h-full object-cover" /> : "F"}
         </div>
       </div>
     </div>

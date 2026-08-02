@@ -1,16 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { GitCompare, CheckCircle2, XCircle } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
+import { addActivity } from "../../lib/activity";
 
 export default function HashCompare() {
   const [hash1, setHash1] = useState("");
   const [hash2, setHash2] = useState("");
+  const [logged, setLogged] = useState(false);
 
   const normalize = (h: string) => h.trim().toLowerCase();
   const bothFilled = hash1.trim() !== "" && hash2.trim() !== "";
   const isMatch = bothFilled && normalize(hash1) === normalize(hash2);
+
+  useEffect(() => {
+    if (bothFilled && !logged) {
+      addActivity("Hash comparison performed");
+      setLogged(true);
+    }
+    if (!bothFilled) setLogged(false);
+  }, [bothFilled, logged]);
 
   return (
     <div className="bg-cyberDark min-h-screen flex">

@@ -1,14 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ShieldCheck, Search, AlertTriangle, CheckCircle2, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const activity = [
-  { text: "Password strength checked", time: "2 mins ago", color: "text-neonGreen" },
-  { text: "Port scan completed", time: "15 mins ago", color: "text-neonGreen" },
-  { text: "WHOIS lookup performed", time: "32 mins ago", color: "text-neonBlue" },
-  { text: "Hash generated", time: "1 hour ago", color: "text-purple-400" },
-  { text: "IP lookup performed", time: "2 hours ago", color: "text-neonBlue" },
-];
+import { getActivities, subscribeActivity, addActivity, timeAgo } from "../../lib/activity";
 
 const scanSteps = [
   "Checking password policies...",
@@ -39,6 +32,11 @@ export default function RightPanel() {
   const [currentStep, setCurrentStep] = useState("");
   const [results, setResults] = useState<typeof basicFindings | null>(null);
   const [lastScan, setLastScan] = useState("2 hours ago");
+  const [activities, setActivities] = useState(getActivities());
+
+  useEffect(() => {
+    return subscribeActivity(() => setActivities(getActivities()));
+  }, []);
 
   const runScan = () => {
     setScanning(true);
@@ -61,6 +59,7 @@ export default function RightPanel() {
         setScanning(false);
         setResults(scanType.includes("Deep") ? deepFindings : basicFindings);
         setLastScan("Just now");
+        addActivity(`${scanType.includes("Deep") ? "Deep" : "Quick"} scan completed`);
       }
     }, 250);
   };
@@ -173,18 +172,19 @@ export default function RightPanel() {
       <div className="bg-white/5 border border-white/10 rounded-xl p-5">
         <div className="flex items-center justify-between mb-3">
           <p className="text-white font-semibold text-sm">Recent Activity</p>
-          <a href="#" className="text-neonGreen text-xs hover:underline">View All</a>
+          <a href="/scans-history" className="text-neonGreen text-xs hover:underline">View All</a>
         </div>
         <div className="space-y-3">
-          {activity.map((a, i) => (
-            <div key={i} className="flex items-start gap-2">
-              <span className={`w-1.5 h-1.5 rounded-full mt-1.5 ${a.color === "text-neonGreen" ? "bg-neonGreen" : a.color === "text-neonBlue" ? "bg-neonBlue" : "bg-purple-400"}`} />
+          {activities.slice(0, 5).map((a) => (
+            <div key={a.id} className="flex items-start gap-2">
+              <span className="w-1.5 h-1.5 rounded-full mt-1.5 bg-neonGreen" />
               <div>
                 <p className="text-gray-300 text-xs">{a.text}</p>
-                <p className="text-gray-600 text-xs">{a.time}</p>
+                <p className="text-gray-600 text-xs">{timeAgo(a.time)}</p>
               </div>
             </div>
           ))}
+          {activities.length === 0 && <p className="text-gray-600 text-xs">No activity yet</p>}
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Radar, Search, CheckCircle2, XCircle } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
+import { addActivity } from "../../lib/activity";
 
 const commonPorts = [
   { port: 21, service: "FTP" },
@@ -36,6 +37,7 @@ export default function PortScanner() {
       if (i >= commonPorts.length) {
         clearInterval(interval);
         setScanning(false);
+        addActivity("Port scan completed");
         return;
       }
       const current = commonPorts[i];

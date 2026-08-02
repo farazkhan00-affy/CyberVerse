@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Lock, Copy, RefreshCw, Check } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
+import { showToast } from "../../lib/toast";
 
 export default function PasswordGenerator() {
   const [length, setLength] = useState(16);
@@ -42,6 +43,7 @@ export default function PasswordGenerator() {
     if (!password) return;
     navigator.clipboard.writeText(password);
     setCopied(true);
+    showToast("Password copied to clipboard!");
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -85,7 +87,6 @@ export default function PasswordGenerator() {
             transition={{ duration: 0.4 }}
             className="bg-white/5 border border-white/10 rounded-xl p-6"
           >
-            {/* Password display */}
             <div className="flex items-center gap-2 bg-cyberDark border border-white/10 rounded-lg px-4 py-3 mb-2">
               <p className="flex-1 text-white font-mono text-lg break-all">
                 {password || "Click generate to create a password"}
@@ -108,7 +109,6 @@ export default function PasswordGenerator() {
               </div>
             )}
 
-            {/* Length slider */}
             <div className="mb-6">
               <div className="flex justify-between text-sm text-gray-300 mb-2">
                 <span>Password Length</span>
@@ -124,7 +124,6 @@ export default function PasswordGenerator() {
               />
             </div>
 
-            {/* Options */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               {options.map((opt) => (
                 <label

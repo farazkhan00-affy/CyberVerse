@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { UserSearch, Search } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
+import { addActivity } from "../../lib/activity";
 
 interface RdapEvent {
   eventAction: string;
@@ -49,6 +50,7 @@ export default function WhoisLookup() {
       }
       const data = await res.json();
       setResult(data);
+      addActivity("WHOIS lookup performed");
     } catch {
       setError("Failed to fetch WHOIS data. Check the domain and your connection.");
     } finally {

@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ShieldCheck, Eye, EyeOff, Check, X } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
+import { addActivity } from "../../lib/activity";
 
 export default function PasswordAnalyzer() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [logged, setLogged] = useState(false);
+
+  useEffect(() => {
+    if (password && !logged) {
+      addActivity("Password strength checked");
+      setLogged(true);
+    }
+    if (!password) setLogged(false);
+  }, [password, logged]);
 
   const checks = [
     { label: "At least 8 characters", pass: password.length >= 8 },

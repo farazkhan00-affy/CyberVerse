@@ -4,6 +4,7 @@ import { Network, Search } from "lucide-react";
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
 import api from "../../lib/api";
+import { addActivity } from "../../lib/activity";
 
 export default function CorsAnalyzer() {
   const [url, setUrl] = useState("");
@@ -20,6 +21,7 @@ export default function CorsAnalyzer() {
     try {
       const res = await api.get("/web/cors-analyzer", { params: { url: url.trim() } });
       setCors(res.data.cors);
+      addActivity("CORS analysis performed");
     } catch (err: any) {
       setError(err.response?.data?.detail || "Could not reach this URL");
     } finally {
