@@ -2,8 +2,10 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import FeatureCards from "./components/FeatureCards";
+import PopularToolsChips from "./components/PopularToolsChips";
 import Stats from "./components/Stats";
-import Features from "./components/Features";
+import Faq from "./components/Faq";
 import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
@@ -57,8 +59,10 @@ function LandingPage() {
       <div className="bg-cyberDark min-h-screen">
         <Navbar />
         <Hero />
+        <FeatureCards />
+        <PopularToolsChips />
         <Stats />
-        <Features />
+        <Faq />
         <Footer />
       </div>
     </PageWrapper>
