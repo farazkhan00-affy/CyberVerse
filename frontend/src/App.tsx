@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ToastContainer from "./components/ToastContainer";
+import AiChatWidget from "./components/AiChatWidget";
 import AllTools from "./pages/AllTools";
 import Reports from "./pages/Reports";
 import ScansHistory from "./pages/ScansHistory";
@@ -75,6 +76,7 @@ function App() {
   return (
     <>
       <ToastContainer />
+      <AiChatWidget />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<LandingPage />} />
