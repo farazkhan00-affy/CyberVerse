@@ -5,6 +5,7 @@ from app.models import user
 from app.routers import auth_routes
 from app.routers import web_tools
 from app.routers import ai_chat
+from app.routers import contact
 
 Base.metadata.create_all(bind=engine)
 
@@ -20,6 +21,7 @@ app.add_middleware(
 app.include_router(auth_routes.router)
 app.include_router(web_tools.router)
 app.include_router(ai_chat.router)
+app.include_router(contact.router)
 
 @app.get("/health")
 def health():

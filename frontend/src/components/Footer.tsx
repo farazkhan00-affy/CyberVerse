@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Mail, Send, Heart } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import logo from "../assets/cyberverse-logo.svg";
+import api from "../lib/api";
+import { showToast } from "../lib/toast";
 
 const socials = [
   { icon: FaGithub, url: "https://github.com/farazkhan00-affy" },
@@ -12,16 +14,22 @@ const socials = [
 
 export default function Footer() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
 
-    const subject = encodeURIComponent(`CyberVerse Contact from ${form.name}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`
-    );
-    window.location.href = `mailto:fh210642@gmail.com?subject=${subject}&body=${body}`;
+    setSending(true);
+    try {
+      await api.post("/contact/send", form);
+      showToast("Message sent successfully!");
+      setForm({ name: "", email: "", message: "" });
+    } catch {
+      showToast("Failed to send message. Please try again.", "error");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -71,7 +79,7 @@ export default function Footer() {
         {/* Contact form */}
         <div>
           <h3 className="text-white font-semibold mb-1">Have Questions? We're Here to Help</h3>
-          <p className="text-gray-500 text-sm mb-4">Send us a message and it'll open in your email app, ready to send.</p>
+          <p className="text-gray-500 text-sm mb-4">Send us a message and we'll get back to you as soon as possible.</p>
           <form onSubmit={handleSubmit} className="space-y-3">
             <div className="flex gap-3">
               <input
@@ -98,9 +106,10 @@ export default function Footer() {
             />
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 bg-neonGreen text-black font-semibold py-2.5 rounded-lg hover:brightness-110 transition"
+              disabled={sending}
+              className="w-full flex items-center justify-center gap-2 bg-neonGreen text-black font-semibold py-2.5 rounded-lg hover:brightness-110 transition disabled:opacity-50"
             >
-              Send Message <Send size={14} />
+              {sending ? "Sending..." : "Send Message"} <Send size={14} />
             </button>
           </form>
         </div>

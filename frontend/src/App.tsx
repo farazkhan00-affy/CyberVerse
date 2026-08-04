@@ -10,6 +10,8 @@ import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ToastContainer from "./components/ToastContainer";
 import AiChatWidget from "./components/AiChatWidget";
@@ -103,6 +105,22 @@ function App() {
             element={
               <PageWrapper>
                 <Login />
+              </PageWrapper>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <PageWrapper>
+                <ForgotPassword />
+              </PageWrapper>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <PageWrapper>
+                <ResetPassword />
               </PageWrapper>
             }
           />
