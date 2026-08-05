@@ -3,8 +3,16 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from app.database import get_db
 from app.models.user import User
-from app.schemas.user import UserCreate, UserLogin, UserOut, Token
-from app.auth import hash_password, verify_password, create_access_token, create_reset_token, verify_reset_token
+from app.schemas.user import UserCreate, UserLogin, UserOut
+from app.auth import (
+    hash_password,
+    verify_password,
+    create_access_token,
+    create_refresh_token,
+    verify_refresh_token,
+    create_reset_token,
+    verify_reset_token,
+)
 from app.email_utils import send_email
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -27,14 +35,29 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     return new_user
 
 
-@router.post("/login", response_model=Token)
+@router.post("/login")
 def login(user: UserLogin, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.email == user.email).first()
     if not db_user or not verify_password(user.password, db_user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
     access_token = create_access_token(data={"sub": db_user.email, "role": db_user.role})
-    return {"access_token": access_token, "token_type": "bearer"}
+    refresh_token = create_refresh_token(data={"sub": db_user.email, "role": db_user.role})
+    return {"access_token": access_token, "refresh_token": refresh_token, "token_type": "bearer"}
+
+
+class RefreshRequest(BaseModel):
+    refresh_token: str
+
+
+@router.post("/refresh")
+def refresh_token_endpoint(request: RefreshRequest):
+    payload = verify_refresh_token(request.refresh_token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Invalid or expired refresh token")
+
+    new_access_token = create_access_token(data={"sub": payload["sub"], "role": payload.get("role", "user")})
+    return {"access_token": new_access_token, "token_type": "bearer"}
 
 
 class ChangePasswordRequest(BaseModel):

@@ -6,6 +6,7 @@ import Sidebar from "../components/dashboard/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
 import { showToast } from "../lib/toast";
 import api from "../lib/api";
+import { userKey } from "../lib/session";
 
 export default function SettingsPage() {
   const navigate = useNavigate();
@@ -21,11 +22,11 @@ export default function SettingsPage() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const savedNotifs = localStorage.getItem("setting_email_notifs");
-    const saved2fa = localStorage.getItem("setting_2fa");
-    if (savedNotifs !== null) setEmailNotifs(savedNotifs === "true");
-    if (saved2fa !== null) setTwoFactor(saved2fa === "true");
-  }, []);
+  const savedNotifs = localStorage.getItem(userKey("setting_email_notifs"));
+  const saved2fa = localStorage.getItem(userKey("setting_2fa"));
+  if (savedNotifs !== null) setEmailNotifs(savedNotifs === "true");
+  if (saved2fa !== null) setTwoFactor(saved2fa === "true");
+}, []);
 
   const handleToggleNotifs = () => {
     const newVal = !emailNotifs;

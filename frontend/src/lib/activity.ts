@@ -1,17 +1,17 @@
+import { userKey } from "./session";
+
 export interface ActivityItem {
   id: number;
   text: string;
   time: number;
 }
 
-const STORAGE_KEY = "cyberverse_activity";
-const LAST_SEEN_KEY = "cyberverse_activity_last_seen";
 type Listener = () => void;
 const listeners: Listener[] = [];
 
 function readAll(): ActivityItem[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(userKey("cyberverse_activity"));
     return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
@@ -19,7 +19,7 @@ function readAll(): ActivityItem[] {
 }
 
 function writeAll(items: ActivityItem[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  localStorage.setItem(userKey("cyberverse_activity"), JSON.stringify(items));
   listeners.forEach((fn) => fn());
 }
 
@@ -42,12 +42,12 @@ export function subscribeActivity(fn: Listener) {
 }
 
 export function getUnreadCount(): number {
-  const lastSeen = Number(localStorage.getItem(LAST_SEEN_KEY) || 0);
+  const lastSeen = Number(localStorage.getItem(userKey("cyberverse_activity_last_seen")) || 0);
   return readAll().filter((a) => a.time > lastSeen).length;
 }
 
 export function markAllSeen() {
-  localStorage.setItem(LAST_SEEN_KEY, String(Date.now()));
+  localStorage.setItem(userKey("cyberverse_activity_last_seen"), String(Date.now()));
   listeners.forEach((fn) => fn());
 }
 

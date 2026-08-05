@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Shield, User, Mail, Lock } from "lucide-react";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 import api from "../lib/api";
 
 export default function Register() {
@@ -28,6 +29,8 @@ export default function Register() {
     }
   };
 
+  const API_BASE = "http://127.0.0.1:8000";
+
   return (
     <div className="min-h-screen bg-cyberDark flex items-center justify-center px-6">
       <motion.div
@@ -51,6 +54,27 @@ export default function Register() {
             {error}
           </div>
         )}
+
+        <div className="grid grid-cols-2 gap-3 mb-5">
+          <a
+            href={`${API_BASE}/auth/google/login`}
+            className="flex items-center justify-center gap-2 border border-white/10 rounded-lg py-2.5 text-sm text-white hover:bg-white/5 transition"
+          >
+            <FaGoogle size={15} /> Google
+          </a>
+          <a
+            href={`${API_BASE}/auth/github/login`}
+            className="flex items-center justify-center gap-2 border border-white/10 rounded-lg py-2.5 text-sm text-white hover:bg-white/5 transition"
+          >
+            <FaGithub size={15} /> GitHub
+          </a>
+        </div>
+
+        <div className="flex items-center gap-3 mb-5">
+          <div className="h-px bg-white/10 flex-1" />
+          <span className="text-gray-500 text-xs">OR</span>
+          <div className="h-px bg-white/10 flex-1" />
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative">

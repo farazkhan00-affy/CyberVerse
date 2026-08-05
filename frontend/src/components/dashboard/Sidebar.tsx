@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { userKey } from "../../lib/session";
 import {
   Home, Lock, Globe, Monitor, Code2, Hash, ShieldCheck, Grid3x3,
   History, FileText, Star, Settings, ChevronDown, LogOut,
@@ -84,20 +85,21 @@ export default function Sidebar() {
   const [profileName, setProfileName] = useState("Faraz");
   const [profileAvatar, setProfileAvatar] = useState<string | null>(null);
 
-  useEffect(() => {
-    const load = () => {
-      setProfileName(localStorage.getItem("profile_name") || "Faraz");
-      setProfileAvatar(localStorage.getItem("profile_avatar"));
-    };
-    load();
-    window.addEventListener("profile-updated", load);
-    return () => window.removeEventListener("profile-updated", load);
-  }, []);
+ useEffect(() => {
+  const load = () => {
+    setProfileName(localStorage.getItem(userKey("profile_name")) || "User");
+    setProfileAvatar(localStorage.getItem(userKey("profile_avatar")));
+  };
+  load();
+  window.addEventListener("profile-updated", load);
+  return () => window.removeEventListener("profile-updated", load);
+}, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
+  localStorage.removeItem("token");
+  localStorage.removeItem("refresh_token");
+  navigate("/login");
+};
 
   const toggleGroup = (name: string) => {
     setOpenGroup(openGroup === name ? null : name);

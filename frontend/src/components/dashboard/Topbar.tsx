@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { Search, Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getActivities, subscribeActivity, getUnreadCount, markAllSeen, timeAgo } from "../../lib/activity";
+import { userKey } from "../../lib/session";
 
 export default function Topbar() {
   const [open, setOpen] = useState(false);
   const [activities, setActivities] = useState(getActivities());
   const [unreadCount, setUnreadCount] = useState(getUnreadCount());
   const [avatar, setAvatar] = useState<string | null>(null);
+  const [profileName, setProfileName] = useState("User");
 
   useEffect(() => {
     return subscribeActivity(() => {
@@ -17,7 +19,10 @@ export default function Topbar() {
   }, []);
 
   useEffect(() => {
-    const load = () => setAvatar(localStorage.getItem("profile_avatar"));
+    const load = () => {
+      setAvatar(localStorage.getItem(userKey("profile_avatar")));
+      setProfileName(localStorage.getItem(userKey("profile_name")) || "User");
+    };
     load();
     window.addEventListener("profile-updated", load);
     return () => window.removeEventListener("profile-updated", load);
@@ -81,7 +86,7 @@ export default function Topbar() {
         </div>
 
         <div className="w-9 h-9 rounded-full bg-neonGreen/20 flex items-center justify-center text-neonGreen font-semibold text-sm overflow-hidden">
-          {avatar ? <img src={avatar} alt="Avatar" className="w-full h-full object-cover" /> : "F"}
+          {avatar ? <img src={avatar} alt="Avatar" className="w-full h-full object-cover" /> : profileName.charAt(0).toUpperCase()}
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import OAuthSuccess from "./pages/OAuthSuccess";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ToastContainer from "./components/ToastContainer";
 import AiChatWidget from "./components/AiChatWidget";
@@ -121,6 +122,14 @@ function App() {
             element={
               <PageWrapper>
                 <ResetPassword />
+              </PageWrapper>
+            }
+          />
+          <Route
+            path="/oauth-success"
+            element={
+              <PageWrapper>
+                <OAuthSuccess />
               </PageWrapper>
             }
           />

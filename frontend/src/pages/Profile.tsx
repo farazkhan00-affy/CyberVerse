@@ -4,17 +4,18 @@ import { User, Mail, Calendar, Camera } from "lucide-react";
 import Sidebar from "../components/dashboard/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
 import { showToast } from "../lib/toast";
+import { userKey } from "../lib/session";
 
 export default function Profile() {
-  const [name, setName] = useState("Faraz");
+  const [name, setName] = useState("User");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const savedName = localStorage.getItem("profile_name");
-    const savedEmail = localStorage.getItem("profile_email");
-    const savedAvatar = localStorage.getItem("profile_avatar");
+    const savedName = localStorage.getItem(userKey("profile_name"));
+    const savedEmail = localStorage.getItem(userKey("profile_email"));
+    const savedAvatar = localStorage.getItem(userKey("profile_avatar"));
     if (savedName) setName(savedName);
     if (savedEmail) setEmail(savedEmail);
     if (savedAvatar) setAvatar(savedAvatar);
@@ -39,9 +40,9 @@ export default function Profile() {
   };
 
   const handleSave = () => {
-    localStorage.setItem("profile_name", name);
-    localStorage.setItem("profile_email", email);
-    if (avatar) localStorage.setItem("profile_avatar", avatar);
+    localStorage.setItem(userKey("profile_name"), name);
+    localStorage.setItem(userKey("profile_email"), email);
+    if (avatar) localStorage.setItem(userKey("profile_avatar"), avatar);
     window.dispatchEvent(new Event("profile-updated"));
     showToast("Profile updated!");
   };
