@@ -28,11 +28,11 @@ export default function QrGenerator() {
   };
 
   return (
-    <div className="bg-cyberDark min-h-screen flex">
+    <div className="bg-cyberDark min-h-screen flex flex-col md:flex-row">
       <Sidebar />
-      <div className="ml-64 flex-1">
+      <div className="md:ml-64 flex-1 pt-14 md:pt-0">
         <Topbar />
-        <div className="p-8 max-w-2xl">
+        <div className="p-4 sm:p-8 max-w-2xl">
           <div className="flex items-center gap-3 mb-1">
             <QrCode className="text-pink-400" size={24} />
             <h1 className="text-2xl font-bold text-white">QR Code Generator</h1>
@@ -84,8 +84,8 @@ export default function QrGenerator() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="flex flex-col items-center gap-4"
               >
-                <div className="bg-white p-4 rounded-lg">
-                  <img src={qrUrl} alt="Generated QR Code" width={size} height={size} />
+                <div className="bg-white p-4 rounded-lg max-w-full overflow-hidden">
+                  <img src={qrUrl} alt="Generated QR Code" className="max-w-full h-auto" style={{ width: size, height: size }} />
                 </div>
                 <button
                   onClick={handleDownload}

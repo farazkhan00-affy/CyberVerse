@@ -48,11 +48,11 @@ export default function Profile() {
   };
 
   return (
-    <div className="bg-cyberDark min-h-screen flex">
+    <div className="bg-cyberDark min-h-screen flex flex-col md:flex-row">
       <Sidebar />
-      <div className="ml-64 flex-1">
+      <div className="md:ml-64 flex-1 pt-14 md:pt-0">
         <Topbar />
-        <div className="p-8 max-w-2xl">
+        <div className="p-4 sm:p-8 max-w-2xl">
           <div className="flex items-center gap-3 mb-1">
             <User className="text-neonGreen" size={24} />
             <h1 className="text-2xl font-bold text-white">Profile</h1>
@@ -72,7 +72,7 @@ export default function Profile() {
                 {avatar ? (
                   <img src={avatar} alt="Avatar" className="w-full h-full object-cover" />
                 ) : (
-                  name.charAt(0)
+                  name.charAt(0).toUpperCase()
                 )}
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                   <Camera size={18} className="text-white" />
@@ -123,7 +123,7 @@ export default function Profile() {
 
             <button
               onClick={handleSave}
-              className="bg-neonGreen text-black font-semibold px-6 py-2.5 rounded-lg hover:brightness-110 transition"
+              className="bg-neonGreen text-black font-semibold px-6 py-2.5 rounded-lg hover:brightness-110 transition w-full sm:w-auto"
             >
               Save Changes
             </button>

@@ -65,7 +65,7 @@ export default function RightPanel() {
   };
 
   return (
-    <div className="w-80 flex-shrink-0 space-y-6">
+    <div className="w-full lg:w-80 flex-shrink-0 space-y-6">
       {/* System Status */}
       <div className="bg-white/5 border border-white/10 rounded-xl p-5">
         <div className="flex items-center gap-2 mb-4">

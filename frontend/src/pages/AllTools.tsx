@@ -78,11 +78,11 @@ const toolGroups = [
 
 export default function AllTools() {
   return (
-    <div className="bg-cyberDark min-h-screen flex">
+    <div className="bg-cyberDark min-h-screen flex flex-col md:flex-row">
       <Sidebar />
-      <div className="ml-64 flex-1">
+      <div className="md:ml-64 flex-1 pt-14 md:pt-0">
         <Topbar />
-        <div className="p-8">
+        <div className="p-4 sm:p-8">
           <h1 className="text-2xl font-bold text-white mb-1">All Tools</h1>
           <p className="text-gray-400 text-sm mb-8">Browse every tool available on CyberVerse</p>
 
@@ -98,7 +98,7 @@ export default function AllTools() {
                 <group.icon className="text-neonGreen" size={20} />
                 <h2 className="text-white font-semibold text-lg">{group.name}</h2>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {group.tools.map((tool, ti) => (
                   <Link key={tool.link} to={tool.link}>
                     <motion.div

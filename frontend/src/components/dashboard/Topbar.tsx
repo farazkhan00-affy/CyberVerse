@@ -34,8 +34,8 @@ export default function Topbar() {
   };
 
   return (
-    <div className="flex items-center justify-between px-8 py-4 border-b border-white/10 bg-cyberDark sticky top-0 z-10">
-      <div className="relative w-96">
+    <div className="flex items-center justify-between px-4 sm:px-8 py-4 border-b border-white/10 bg-cyberDark sticky top-0 z-10 gap-3">
+      <div className="relative w-full max-w-xs sm:max-w-sm md:w-96">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
         <input
           type="text"

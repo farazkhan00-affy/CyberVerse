@@ -22,28 +22,28 @@ export default function SettingsPage() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-  const savedNotifs = localStorage.getItem(userKey("setting_email_notifs"));
-  const saved2fa = localStorage.getItem(userKey("setting_2fa"));
-  if (savedNotifs !== null) setEmailNotifs(savedNotifs === "true");
-  if (saved2fa !== null) setTwoFactor(saved2fa === "true");
-}, []);
+    const savedNotifs = localStorage.getItem(userKey("setting_email_notifs"));
+    const saved2fa = localStorage.getItem(userKey("setting_2fa"));
+    if (savedNotifs !== null) setEmailNotifs(savedNotifs === "true");
+    if (saved2fa !== null) setTwoFactor(saved2fa === "true");
+  }, []);
 
   const handleToggleNotifs = () => {
     const newVal = !emailNotifs;
     setEmailNotifs(newVal);
-    localStorage.setItem("setting_email_notifs", String(newVal));
+    localStorage.setItem(userKey("setting_email_notifs"), String(newVal));
     showToast(newVal ? "Email notifications enabled" : "Email notifications disabled");
   };
 
   const handleToggle2fa = () => {
     const newVal = !twoFactor;
     setTwoFactor(newVal);
-    localStorage.setItem("setting_2fa", String(newVal));
+    localStorage.setItem(userKey("setting_2fa"), String(newVal));
     showToast(newVal ? "Two-factor authentication enabled" : "Two-factor authentication disabled");
   };
 
   const handleChangePassword = async () => {
-    const email = localStorage.getItem("profile_email");
+    const email = localStorage.getItem(userKey("profile_email"));
     if (!email) {
       showToast("No email on file — update your profile first", "error");
       return;
@@ -68,7 +68,7 @@ export default function SettingsPage() {
   };
 
   const handleDeleteAccount = async () => {
-    const email = localStorage.getItem("profile_email");
+    const email = localStorage.getItem(userKey("profile_email"));
     if (!email) {
       showToast("No email on file — update your profile first", "error");
       return;
@@ -91,7 +91,7 @@ export default function SettingsPage() {
   const Toggle = ({ value, onChange }: { value: boolean; onChange: () => void }) => (
     <button
       onClick={onChange}
-      className={`w-11 h-6 rounded-full transition relative ${value ? "bg-neonGreen" : "bg-white/10"}`}
+      className={`w-11 h-6 rounded-full transition relative flex-shrink-0 ${value ? "bg-neonGreen" : "bg-white/10"}`}
     >
       <motion.div
         animate={{ x: value ? 20 : 2 }}
@@ -101,11 +101,11 @@ export default function SettingsPage() {
   );
 
   return (
-    <div className="bg-cyberDark min-h-screen flex">
+    <div className="bg-cyberDark min-h-screen flex flex-col md:flex-row">
       <Sidebar />
-      <div className="ml-64 flex-1">
+      <div className="md:ml-64 flex-1 pt-14 md:pt-0">
         <Topbar />
-        <div className="p-8 max-w-2xl">
+        <div className="p-4 sm:p-8 max-w-2xl">
           <div className="flex items-center gap-3 mb-1">
             <Settings className="text-gray-300" size={24} />
             <h1 className="text-2xl font-bold text-white">Settings</h1>
@@ -113,9 +113,9 @@ export default function SettingsPage() {
           <p className="text-gray-400 text-sm mb-6">Manage your account and preferences</p>
 
           <div className="space-y-4 mb-8">
-            <div className="bg-white/5 border border-white/10 rounded-xl p-5 flex items-center justify-between">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-5 flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <Bell size={18} className="text-neonBlue" />
+                <Bell size={18} className="text-neonBlue flex-shrink-0" />
                 <div>
                   <p className="text-white text-sm font-medium">Email Notifications</p>
                   <p className="text-gray-500 text-xs">Get notified about scan results</p>
@@ -124,9 +124,9 @@ export default function SettingsPage() {
               <Toggle value={emailNotifs} onChange={handleToggleNotifs} />
             </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-5 flex items-center justify-between">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-5 flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <Shield size={18} className="text-neonGreen" />
+                <Shield size={18} className="text-neonGreen flex-shrink-0" />
                 <div>
                   <p className="text-white text-sm font-medium">Two-Factor Authentication</p>
                   <p className="text-gray-500 text-xs">Add an extra layer of security</p>
@@ -136,7 +136,6 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          {/* Change Password */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -163,13 +162,12 @@ export default function SettingsPage() {
             <button
               onClick={handleChangePassword}
               disabled={!currentPassword || !newPassword || changingPassword}
-              className="bg-neonGreen text-black font-semibold px-5 py-2 rounded-lg hover:brightness-110 transition disabled:opacity-40 text-sm"
+              className="bg-neonGreen text-black font-semibold px-5 py-2 rounded-lg hover:brightness-110 transition disabled:opacity-40 text-sm w-full sm:w-auto"
             >
               {changingPassword ? "Updating..." : "Update Password"}
             </button>
           </motion.div>
 
-          {/* Delete Account */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -200,7 +198,7 @@ export default function SettingsPage() {
                   onChange={(e) => setDeletePassword(e.target.value)}
                   className="w-full bg-cyberDark border border-red-500/30 rounded-lg px-3 py-2.5 text-sm text-white mb-3 focus:outline-none"
                 />
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <button
                     onClick={handleDeleteAccount}
                     disabled={!deletePassword || deleting}

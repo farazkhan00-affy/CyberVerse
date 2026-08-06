@@ -24,11 +24,11 @@ export default function Reports() {
   };
 
   return (
-    <div className="bg-cyberDark min-h-screen flex">
+    <div className="bg-cyberDark min-h-screen flex flex-col md:flex-row">
       <Sidebar />
-      <div className="ml-64 flex-1">
+      <div className="md:ml-64 flex-1 pt-14 md:pt-0">
         <Topbar />
-        <div className="p-8 max-w-3xl">
+        <div className="p-4 sm:p-8 max-w-3xl">
           <div className="flex items-center gap-3 mb-1">
             <FileText className="text-pink-400" size={24} />
             <h1 className="text-2xl font-bold text-white">Reports</h1>
@@ -46,7 +46,7 @@ export default function Reports() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-between"
+                className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
               >
                 <div>
                   <p className="text-white text-sm font-semibold">{r.text}</p>
@@ -54,7 +54,7 @@ export default function Reports() {
                 </div>
                 <button
                   onClick={() => handleDownload(r.text, r.time)}
-                  className="flex items-center gap-2 text-neonGreen text-sm hover:underline"
+                  className="flex items-center gap-2 text-neonGreen text-sm hover:underline self-start sm:self-auto"
                 >
                   <Download size={14} /> Download
                 </button>

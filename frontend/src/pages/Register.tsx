@@ -21,6 +21,13 @@ export default function Register() {
     setLoading(true);
     try {
       await api.post("/auth/register", form);
+
+      // Save the entered name/email now, keyed by email —
+      // so as soon as they log in and get a token, Sidebar/Topbar/Dashboard
+      // can find the correct name for this exact account.
+      localStorage.setItem(`profile_name_${form.email}`, form.name);
+      localStorage.setItem(`profile_email_${form.email}`, form.email);
+
       navigate("/login");
     } catch (err: any) {
       setError(err.response?.data?.detail || "Something went wrong");

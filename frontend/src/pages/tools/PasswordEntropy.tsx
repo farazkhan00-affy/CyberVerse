@@ -33,7 +33,7 @@ export default function PasswordEntropy() {
   const estimateCrackTime = () => {
     if (entropy === 0) return "—";
     const guesses = Math.pow(2, entropy);
-    const guessesPerSecond = 1e10; // 10 billion/sec, offline fast attack estimate
+    const guessesPerSecond = 1e10;
     const seconds = guesses / guessesPerSecond;
 
     if (seconds < 1) return "Instantly";
@@ -51,11 +51,11 @@ export default function PasswordEntropy() {
   const rating = getRating();
 
   return (
-    <div className="bg-cyberDark min-h-screen flex">
+    <div className="bg-cyberDark min-h-screen flex flex-col md:flex-row">
       <Sidebar />
-      <div className="ml-64 flex-1">
+      <div className="md:ml-64 flex-1 pt-14 md:pt-0">
         <Topbar />
-        <div className="p-8 max-w-2xl">
+        <div className="p-4 sm:p-8 max-w-2xl">
           <div className="flex items-center gap-3 mb-1">
             <Gauge className="text-purple-400" size={24} />
             <h1 className="text-2xl font-bold text-white">Password Entropy Calculator</h1>
@@ -76,7 +76,7 @@ export default function PasswordEntropy() {
               className="w-full bg-cyberDark border border-white/10 rounded-lg px-4 py-3 text-white font-mono mb-6 focus:outline-none focus:border-neonGreen/40"
             />
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-cyberDark border border-white/10 rounded-lg p-4 text-center">
                 <p className="text-gray-500 text-xs mb-1">Entropy</p>
                 <p className="text-2xl font-bold text-white">{entropy.toFixed(1)} <span className="text-sm text-gray-500">bits</span></p>

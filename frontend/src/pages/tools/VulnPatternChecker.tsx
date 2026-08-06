@@ -28,11 +28,11 @@ export default function VulnPatternChecker() {
   const hasIssues = xssMatches.length > 0 || sqliMatches.length > 0;
 
   return (
-    <div className="bg-cyberDark min-h-screen flex">
+    <div className="bg-cyberDark min-h-screen flex flex-col md:flex-row">
       <Sidebar />
-      <div className="ml-64 flex-1">
+      <div className="md:ml-64 flex-1 pt-14 md:pt-0">
         <Topbar />
-        <div className="p-8 max-w-2xl">
+        <div className="p-4 sm:p-8 max-w-2xl">
           <div className="flex items-center gap-3 mb-1">
             <Bug className="text-red-400" size={24} />
             <h1 className="text-2xl font-bold text-white">XSS / SQLi Pattern Checker</h1>

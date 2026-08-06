@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { userKey } from "../../lib/session";
 import {
   Home, Lock, Globe, Monitor, Code2, Hash, ShieldCheck, Grid3x3,
   History, FileText, Star, Settings, ChevronDown, LogOut,
   KeyRound, Gauge, ClipboardCheck, Server, UserSearch, Braces, GitCompare,
   Radar, QrCode, ShieldAlert, Bug, Cookie, Network,
-  KeySquare, ShieldEllipsis, Binary,
+  KeySquare, ShieldEllipsis, Binary, Menu, X,
 } from "lucide-react";
 import logo from "../../assets/cyberverse-logo.svg";
+import { userKey } from "../../lib/session";
 
 const toolGroups = [
   {
@@ -82,37 +82,50 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
-  const [profileName, setProfileName] = useState("Faraz");
+  const [profileName, setProfileName] = useState("User");
   const [profileAvatar, setProfileAvatar] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
- useEffect(() => {
-  const load = () => {
-    setProfileName(localStorage.getItem(userKey("profile_name")) || "User");
-    setProfileAvatar(localStorage.getItem(userKey("profile_avatar")));
-  };
-  load();
-  window.addEventListener("profile-updated", load);
-  return () => window.removeEventListener("profile-updated", load);
-}, []);
+  useEffect(() => {
+    const load = () => {
+      setProfileName(localStorage.getItem(userKey("profile_name")) || "User");
+      setProfileAvatar(localStorage.getItem(userKey("profile_avatar")));
+    };
+    load();
+    window.addEventListener("profile-updated", load);
+    return () => window.removeEventListener("profile-updated", load);
+  }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("refresh_token");
-  navigate("/login");
-};
+    localStorage.removeItem("token");
+    localStorage.removeItem("refresh_token");
+    navigate("/login");
+  };
 
   const toggleGroup = (name: string) => {
     setOpenGroup(openGroup === name ? null : name);
   };
 
-  return (
-    <aside className="w-64 h-screen bg-cyberDark border-r border-white/10 fixed left-0 top-0 flex flex-col">
-      <div className="flex items-center gap-2 px-6 py-5 border-b border-white/10">
-        <img src={logo} alt="CyberVerse" className="w-7 h-7" />
-        <div>
-          <p className="text-white font-bold leading-tight">CYBERVERSE</p>
-          <p className="text-gray-500 text-xs">Protect. Analyze. Secure.</p>
+  const sidebarContent = (
+    <>
+      <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+        <div className="flex items-center gap-2">
+          <img src={logo} alt="CyberVerse" className="w-7 h-7" />
+          <div>
+            <p className="text-white font-bold leading-tight">CYBERVERSE</p>
+            <p className="text-gray-500 text-xs">Protect. Analyze. Secure.</p>
+          </div>
         </div>
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="md:hidden text-gray-400 hover:text-white transition"
+        >
+          <X size={20} />
+        </button>
       </div>
 
       <div className="flex-1 overflow-y-auto px-3 py-4">
@@ -201,7 +214,7 @@ export default function Sidebar() {
           {profileAvatar ? (
             <img src={profileAvatar} alt="Avatar" className="w-full h-full object-cover" />
           ) : (
-            profileName.charAt(0)
+            profileName.charAt(0).toUpperCase()
           )}
         </div>
         <div>
@@ -216,6 +229,50 @@ export default function Sidebar() {
       >
         <LogOut size={16} /> Logout
       </button>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile top bar with hamburger */}
+      <div className="md:hidden fixed top-0 left-0 w-full h-14 bg-cyberDark border-b border-white/10 flex items-center justify-between px-4 z-30">
+        <div className="flex items-center gap-2">
+          <img src={logo} alt="CyberVerse" className="w-6 h-6" />
+          <span className="text-white font-bold text-sm">CYBERVERSE</span>
+        </div>
+        <button onClick={() => setMobileOpen(true)} className="text-white">
+          <Menu size={22} />
+        </button>
+      </div>
+
+      {/* Desktop sidebar */}
+      <aside className="hidden md:flex w-64 h-screen bg-cyberDark border-r border-white/10 fixed left-0 top-0 flex-col z-20">
+        {sidebarContent}
+      </aside>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileOpen(false)}
+              className="md:hidden fixed inset-0 bg-black/60 z-40"
+            />
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "tween", duration: 0.25 }}
+              className="md:hidden fixed left-0 top-0 w-72 h-screen bg-cyberDark border-r border-white/10 flex flex-col z-50"
+            >
+              {sidebarContent}
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
