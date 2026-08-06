@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Shield, User, Mail, Lock } from "lucide-react";
+import { Shield, User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import api from "../lib/api";
 
 export default function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -22,9 +23,6 @@ export default function Register() {
     try {
       await api.post("/auth/register", form);
 
-      // Save the entered name/email now, keyed by email —
-      // so as soon as they log in and get a token, Sidebar/Topbar/Dashboard
-      // can find the correct name for this exact account.
       localStorage.setItem(`profile_name_${form.email}`, form.name);
       localStorage.setItem(`profile_email_${form.email}`, form.email);
 
@@ -113,14 +111,21 @@ export default function Register() {
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               value={form.password}
               onChange={handleChange}
               required
-              className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-neonGreen/40"
+              className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-10 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-neonGreen/40"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
           </div>
 
           <motion.button

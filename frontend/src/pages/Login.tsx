@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Shield, Mail, Lock } from "lucide-react";
+import { Shield, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import api from "../lib/api";
 
@@ -9,6 +9,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -40,7 +41,6 @@ export default function Login() {
     }
   };
 
-  // FIX 4: Changed http://127.0.0.1:8000 to http://localhost:8000
   const API_BASE = "http://localhost:8000";
 
   return (
@@ -58,12 +58,8 @@ export default function Login() {
           </span>
         </div>
 
-        <h1 className="text-xl font-semibold text-white text-center mb-1">
-          Welcome back
-        </h1>
-        <p className="text-gray-400 text-sm text-center mb-6">
-          Log in to access your dashboard
-        </p>
+        <h1 className="text-xl font-semibold text-white text-center mb-1">Welcome back</h1>
+        <p className="text-gray-400 text-sm text-center mb-6">Log in to access your dashboard</p>
 
         {error && (
           <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-lg px-4 py-2 mb-4">
@@ -94,10 +90,7 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative">
-            <Mail
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
-              size={18}
-            />
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
             <input
               type="email"
               name="email"
@@ -110,26 +103,27 @@ export default function Login() {
           </div>
 
           <div className="relative">
-            <Lock
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
-              size={18}
-            />
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               value={form.password}
               onChange={handleChange}
               required
-              className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-neonGreen/40"
+              className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-10 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-neonGreen/40"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
           </div>
 
           <div className="text-right -mt-2">
-            <Link
-              to="/forgot-password"
-              className="text-neonGreen text-xs hover:underline"
-            >
+            <Link to="/forgot-password" className="text-neonGreen text-xs hover:underline">
               Forgot password?
             </Link>
           </div>

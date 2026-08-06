@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Settings, Bell, Shield, KeyRound, Trash2, AlertTriangle } from "lucide-react";
+import { Settings, Bell, Shield, KeyRound, Trash2, AlertTriangle, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/dashboard/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
@@ -15,9 +15,11 @@ export default function SettingsPage() {
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [showPasswords, setShowPasswords] = useState(false);
   const [changingPassword, setChangingPassword] = useState(false);
 
   const [deletePassword, setDeletePassword] = useState("");
+  const [showDeletePassword, setShowDeletePassword] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
@@ -145,20 +147,31 @@ export default function SettingsPage() {
               <KeyRound size={18} className="text-neonGreen" />
               <p className="text-white text-sm font-medium">Change Password</p>
             </div>
-            <input
-              type="password"
-              placeholder="Current password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              className="w-full bg-cyberDark border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white mb-2 focus:outline-none focus:border-neonGreen/40"
-            />
-            <input
-              type="password"
-              placeholder="New password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full bg-cyberDark border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white mb-3 focus:outline-none focus:border-neonGreen/40"
-            />
+            <div className="relative mb-2">
+              <input
+                type={showPasswords ? "text" : "password"}
+                placeholder="Current password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                className="w-full bg-cyberDark border border-white/10 rounded-lg px-3 py-2.5 pr-10 text-sm text-white focus:outline-none focus:border-neonGreen/40"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPasswords(!showPasswords)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition"
+              >
+                {showPasswords ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+            <div className="relative mb-3">
+              <input
+                type={showPasswords ? "text" : "password"}
+                placeholder="New password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="w-full bg-cyberDark border border-white/10 rounded-lg px-3 py-2.5 pr-10 text-sm text-white focus:outline-none focus:border-neonGreen/40"
+              />
+            </div>
             <button
               onClick={handleChangePassword}
               disabled={!currentPassword || !newPassword || changingPassword}
@@ -191,13 +204,22 @@ export default function SettingsPage() {
                 <div className="flex items-center gap-2 text-yellow-400 text-xs mb-3">
                   <AlertTriangle size={14} /> Enter your password to confirm deletion
                 </div>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={deletePassword}
-                  onChange={(e) => setDeletePassword(e.target.value)}
-                  className="w-full bg-cyberDark border border-red-500/30 rounded-lg px-3 py-2.5 text-sm text-white mb-3 focus:outline-none"
-                />
+                <div className="relative mb-3">
+                  <input
+                    type={showDeletePassword ? "text" : "password"}
+                    placeholder="Password"
+                    value={deletePassword}
+                    onChange={(e) => setDeletePassword(e.target.value)}
+                    className="w-full bg-cyberDark border border-red-500/30 rounded-lg px-3 py-2.5 pr-10 text-sm text-white focus:outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowDeletePassword(!showDeletePassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition"
+                  >
+                    {showDeletePassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
                 <div className="flex flex-col sm:flex-row gap-2">
                   <button
                     onClick={handleDeleteAccount}
