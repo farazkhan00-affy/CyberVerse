@@ -62,18 +62,18 @@ export default function AiChatWidget() {
 
   return (
     <>
-      {/* Floating button */}
+      {/* Floating button - Dynamic padding & position for mobile */}
       <motion.button
         onClick={handleButtonClick}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 bg-neonGreen text-black font-semibold px-5 py-3 rounded-full shadow-lg shadow-neonGreen/20"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2 bg-neonGreen text-black font-semibold px-4 py-2.5 sm:px-5 sm:py-3 rounded-full shadow-lg shadow-neonGreen/20 text-sm sm:text-base"
       >
-        <Bot size={20} />
+        <Bot size={18} className="sm:w-5 sm:h-5" />
         CyberVerse AI
       </motion.button>
 
-      {/* Chat window */}  
+      {/* Chat window - Responsive sizing for Mobile vs Desktop */}  
       <AnimatePresence>  
         {open && (  
           <motion.div  
@@ -81,7 +81,7 @@ export default function AiChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}  
             exit={{ opacity: 0, y: 30, scale: 0.95 }}  
             transition={{ duration: 0.25 }}  
-            className="fixed bottom-24 right-6 z-50 w-96 h-[520px] bg-cyberDark border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"  
+            className="fixed bottom-16 right-3 sm:bottom-24 sm:right-6 z-50 w-[calc(100vw-1.5rem)] sm:w-96 max-w-md h-[460px] sm:h-[520px] bg-cyberDark border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"  
           >  
             {/* Header */}  
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/5">  
@@ -126,10 +126,10 @@ export default function AiChatWidget() {
                       animate={{ rotate: [0, 10, -10, 0] }}  
                       transition={{ duration: 1.2, repeat: Infinity, repeatDelay: 1 }}  
                     >  
-                      <Sparkles size={36} className="text-neonGreen" />  
+                      <Sparkles size={32} className="text-neonGreen sm:w-9 sm:h-9" />  
                     </motion.div>  
-                    <p className="text-white font-semibold text-lg">Welcome to CyberVerse AI</p>  
-                    <p className="text-gray-500 text-sm px-6">  
+                    <p className="text-white font-semibold text-base sm:text-lg">Welcome to CyberVerse AI</p>  
+                    <p className="text-gray-500 text-xs sm:text-sm px-4 sm:px-6">  
                       Ask me anything about cybersecurity or the tools on this platform.  
                     </p>  
                   </motion.div>  
@@ -137,8 +137,8 @@ export default function AiChatWidget() {
               </AnimatePresence>  
 
               {!showWelcome && messages.length === 0 && (  
-                <div className="flex flex-col items-center justify-center h-full text-center gap-2 text-gray-500 text-sm">  
-                  <Bot size={28} className="text-neonGreen/50" />  
+                <div className="flex flex-col items-center justify-center h-full text-center gap-2 text-gray-500 text-xs sm:text-sm">  
+                  <Bot size={26} className="text-neonGreen/50 sm:w-7 sm:h-7" />  
                   Ask me anything to get started  
                 </div>  
               )}  
@@ -151,7 +151,7 @@ export default function AiChatWidget() {
                   className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}  
                 >  
                   <div  
-                    className={`max-w-[80%] rounded-xl px-3 py-2 text-sm ${  
+                    className={`max-w-[85%] sm:max-w-[80%] rounded-xl px-3 py-2 text-xs sm:text-sm ${  
                       m.role === "user"  
                         ? "bg-neonGreen text-black"  
                         : "bg-white/5 border border-white/10 text-gray-200"  
@@ -179,19 +179,19 @@ export default function AiChatWidget() {
             </div>  
 
             {/* Input */}  
-            <div className="p-3 border-t border-white/10 flex gap-2">  
+            <div className="p-2.5 sm:p-3 border-t border-white/10 flex gap-2 bg-cyberDark">  
               <input  
                 type="text"  
                 value={input}  
                 onChange={(e) => setInput(e.target.value)}  
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}  
                 placeholder="Type a message..."  
-                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-neonGreen/40"  
+                className="flex-1 min-w-0 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-neonGreen/40"  
               />  
               <button  
                 onClick={handleSend}  
                 disabled={!input.trim() || loading}  
-                className="bg-neonGreen text-black p-2 rounded-lg hover:brightness-110 transition disabled:opacity-40"  
+                className="bg-neonGreen text-black p-2 rounded-lg hover:brightness-110 transition disabled:opacity-40 flex-shrink-0"  
               >  
                 <Send size={16} />  
               </button>  
