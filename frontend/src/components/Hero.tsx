@@ -20,10 +20,10 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center bg-cyberDark overflow-hidden pt-24 pb-16">
+    <section className="relative min-h-screen flex items-center bg-[#0a0a0a] overflow-hidden pt-24 pb-16">
       <ParticleBackground />
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neonGreen/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neonBlue/10 rounded-full blur-3xl" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neonGreen/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neonBlue/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center w-full">
         {/* Left: text */}
@@ -87,7 +87,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 + i * 0.1 }}
-              className={`absolute ${position} w-11 h-11 rounded-full border border-neonGreen/30 bg-cyberDark flex items-center justify-center`}
+              className={`absolute ${position} w-11 h-11 rounded-full border border-neonGreen/30 bg-[#121212] flex items-center justify-center`}
             >
               <Icon size={18} className="text-neonGreen" />
             </motion.div>
