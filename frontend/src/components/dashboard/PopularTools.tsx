@@ -32,7 +32,7 @@ export default function PopularTools() {
               transition={{ duration: 0.35, delay: i * 0.05 }}
               whileHover={{ y: -5, borderColor: "rgba(0,200,83,0.4)" }}
               whileTap={{ scale: 0.97 }}
-              className="bg-white/5 border border-white/10 rounded-xl p-5 text-left cursor-pointer transition"
+              className="bg-[#141414] border border-white/10 rounded-xl p-5 text-left cursor-pointer transition"
             >
               <tool.icon className={`${tool.color} mb-3`} size={26} />
               <p className="text-white text-sm font-semibold">{tool.name}</p>

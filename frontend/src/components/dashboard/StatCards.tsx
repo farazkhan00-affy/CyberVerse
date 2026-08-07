@@ -19,7 +19,7 @@ export default function StatCards() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: i * 0.1 }}
           whileHover={{ y: -4 }}
-          className="bg-white/5 border border-white/10 rounded-xl p-5 flex items-center gap-4 transition"
+          className="bg-[#141414] border border-white/10 rounded-xl p-5 flex items-center gap-4 transition"
         >
           <div className={`p-3 rounded-lg bg-white/5 ${s.color}`}>
             <s.icon size={24} />
