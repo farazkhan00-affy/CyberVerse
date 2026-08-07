@@ -5,6 +5,10 @@ import { Shield, User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import api from "../lib/api";
 
+const API_BASE =
+  import.meta.env.VITE_BACKEND_URL ||
+  "https://cyberverse-backend-udj3.onrender.com";
+
 export default function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -33,8 +37,6 @@ export default function Register() {
       setLoading(false);
     }
   };
-
-  const API_BASE = "http://127.0.0.1:8000";
 
   return (
     <div className="min-h-screen bg-cyberDark flex items-center justify-center px-6">

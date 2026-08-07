@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -16,6 +17,8 @@ from app.auth import (
 from app.email_utils import send_email
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
+
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://cyber-verse-eta.vercel.app")
 
 
 @router.post("/register", response_model=UserOut)
@@ -102,7 +105,7 @@ def forgot_password(request: ForgotPasswordRequest, db: Session = Depends(get_db
     user = db.query(User).filter(User.email == request.email).first()
     if user:
         token = create_reset_token(user.email)
-        reset_link = f"http://localhost:5173/reset-password?token={token}"
+        reset_link = f"{FRONTEND_URL}/reset-password?token={token}"
         try:
             send_email(
                 user.email,

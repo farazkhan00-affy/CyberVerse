@@ -14,7 +14,7 @@ from app.auth import create_access_token, create_refresh_token
 
 router = APIRouter(prefix="/auth", tags=["OAuth"])
 
-# FIX 3: DB Session Dependency
+# DB Session Dependency
 def get_db():
     db = SessionLocal()
     try:
@@ -42,7 +42,9 @@ oauth.register(
     client_kwargs={"scope": "user:email"},
 )
 
-FRONTEND_URL = "http://localhost:5173"
+# Production Frontend & Backend Base URLs
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://cyber-verse-eta.vercel.app")
+BACKEND_URL = os.getenv("BACKEND_URL", "https://cyberverse-backend-udj3.onrender.com")
 
 def get_or_create_user(db: Session, email: str, name: str, provider: str) -> User:
     user = db.query(User).filter(User.email == email).first()
@@ -62,7 +64,7 @@ def get_or_create_user(db: Session, email: str, name: str, provider: str) -> Use
 
 @router.get("/google/login")
 async def google_login(request: Request):
-    redirect_uri = "http://localhost:8000/auth/google/callback"
+    redirect_uri = f"{BACKEND_URL}/auth/google/callback"
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 @router.get("/google/callback")
@@ -89,7 +91,7 @@ async def google_callback(request: Request, db: Session = Depends(get_db)):
 
 @router.get("/github/login")
 async def github_login(request: Request):
-    redirect_uri = "http://localhost:8000/auth/github/callback"
+    redirect_uri = f"{BACKEND_URL}/auth/github/callback"
     return await oauth.github.authorize_redirect(request, redirect_uri)
 
 @router.get("/github/callback")

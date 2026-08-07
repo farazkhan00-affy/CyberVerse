@@ -1,7 +1,12 @@
 import axios from "axios";
 
+// Environment setup for local & production dynamically
+const API_BASE_URL =
+  import.meta.env.VITE_BACKEND_URL ||
+  "https://cyberverse-backend-udj3.onrender.com";
+
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000",
+  baseURL: API_BASE_URL,
 });
 
 let isRefreshing = false;
@@ -30,7 +35,7 @@ api.interceptors.response.use(
 
       isRefreshing = true;
       try {
-        const res = await axios.post("http://127.0.0.1:8000/auth/refresh", {
+        const res = await axios.post(`${API_BASE_URL}/auth/refresh`, {
           refresh_token: refreshToken,
         });
         const newAccessToken = res.data.access_token;

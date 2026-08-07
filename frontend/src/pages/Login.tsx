@@ -5,6 +5,10 @@ import { Shield, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import api from "../lib/api";
 
+const API_BASE =
+  import.meta.env.VITE_BACKEND_URL ||
+  "https://cyberverse-backend-udj3.onrender.com";
+
 export default function Login() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -40,8 +44,6 @@ export default function Login() {
       setLoading(false);
     }
   };
-
-  const API_BASE = "http://localhost:8000";
 
   return (
     <div className="min-h-screen bg-cyberDark flex items-center justify-center px-6">
