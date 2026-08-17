@@ -32,7 +32,7 @@ def chat(request: ChatRequest):
         raise HTTPException(status_code=500, detail="AI service is not configured")
 
     payload = {
-        "model": "llama-3.3-70b-versatile",
+       "model": "openai/gpt-oss-120b",
         "messages": [{"role": "system", "content": SYSTEM_PROMPT}]
         + [{"role": m.role, "content": m.content} for m in request.messages],
         "temperature": 0.7,
